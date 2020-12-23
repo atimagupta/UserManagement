@@ -85,15 +85,4 @@ public class Users {
         return Objects.hash(name, userName, email, password);
     }
 
-//    @Override
-//    public String toString() {
-//        return "User [Id=" + _id +
-//                ", name=" + name +
-//                ", username=" + userName +
-//                ", email=" + email +
-//                ", password=" + password +
-//                ", role =[role=" + role +
-//                ", permissionList="
-//                "]";
-//    }
 }

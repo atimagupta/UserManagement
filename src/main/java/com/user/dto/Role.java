@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
-//@Document(collection = "roles")
 public class Role {
 
     @ApiModelProperty(notes="Type of role")

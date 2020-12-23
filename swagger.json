@@ -14,7 +14,7 @@
     }
   ],
   "paths": {
-    "/user/addPermission/{role}": {
+    "/user/addPermission/{userName}": {
       "post": {
         "tags": [
           "Identity management Apis"
@@ -29,20 +29,20 @@
         ],
         "parameters": [
           {
+            "in": "body",
             "name": "role",
-            "in": "path",
             "description": "role",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
           },
           {
-            "in": "body",
-            "name": "user",
-            "description": "user",
+            "name": "userName",
+            "in": "path",
+            "description": "userName",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Users"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -131,67 +131,13 @@
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "roles[0].id",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "roles[0].permissionList[0].id",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "roles[0].permissionList[0].permission",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "DELETE",
-              "READ",
-              "WRITE"
-            ]
-          },
-          {
-            "name": "roles[0].role",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "ADMIN",
-              "NORMAL"
-            ]
-          },
-          {
-            "name": "userName",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "in": "body",
+            "name": "user",
+            "description": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
           }
         ],
         "responses": {
@@ -219,7 +165,7 @@
         }
       }
     },
-    "/user/login": {
+    "/user/login/{userName}": {
       "post": {
         "tags": [
           "Identity management Apis"
@@ -243,13 +189,11 @@
             }
           },
           {
-            "in": "body",
-            "name": "username",
-            "description": "username",
+            "name": "userName",
+            "in": "path",
+            "description": "userName",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -367,7 +311,7 @@
         }
       }
     },
-    "/user/updatePassword": {
+    "/user/updatePassword/{userName}": {
       "post": {
         "tags": [
           "Identity management Apis"
@@ -391,13 +335,11 @@
             }
           },
           {
-            "in": "body",
-            "name": "user",
-            "description": "user",
+            "name": "userName",
+            "in": "path",
+            "description": "userName",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Users"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -430,13 +372,11 @@
     "Permission": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "permission": {
           "type": "string",
           "description": "Type of permission",
           "enum": [
+            "ALL",
             "DELETE",
             "READ",
             "WRITE"
@@ -534,11 +474,9 @@
     "Role": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "permissionList": {
           "type": "array",
+          "description": "Type of Permissions list",
           "items": {
             "$ref": "#/definitions/Permission"
           }
@@ -557,12 +495,13 @@
     "Users": {
       "type": "object",
       "properties": {
+        "_id": {
+          "type": "string",
+          "description": "The database generated property"
+        },
         "email": {
           "type": "string",
           "description": "email id of the user"
-        },
-        "id": {
-          "type": "string"
         },
         "name": {
           "type": "string",
@@ -572,12 +511,9 @@
           "type": "string",
           "description": "Login password of the user"
         },
-        "roles": {
-          "type": "array",
-          "description": "Roles assigned to the user",
-          "items": {
-            "$ref": "#/definitions/Role"
-          }
+        "role": {
+          "description": "Role assigned to the user",
+          "$ref": "#/definitions/Role"
         },
         "userName": {
           "type": "string",
