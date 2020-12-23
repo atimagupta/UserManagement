@@ -1,8 +1,9 @@
 To Run the project
 ___________________
-1) Download from given git project 
+1) Download from given git repository 
 2) Build the project using pom.xml
-3) Run the project
+3) build docker image
+4) run above docker image within docker container
 
 
 End-Points
